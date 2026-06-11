@@ -10,6 +10,8 @@ jobs:
     # 1. 소문자 windows로 수정
     runs-on: [self-hosted, windows]
 
+    env:
+      COMPOSE_CONVERT_WINDOWS_PATHS: 1
     steps:
       # 1. 깃허브에서 내 유니티 코드 내려받기
       - name: Checkout code
