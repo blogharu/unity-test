@@ -22,4 +22,5 @@ jobs:
           projectPath: .
           # 2. 필수 값이므로 주석을 풀고 그대로 놔둡니다. (내가 비밀키 등록 안 해도 깃허브가 알아서 채워줍니다)
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          unityLicense: ${{ secrets.UNITY_LICENSE }}
           testMode: EditMode
