@@ -7,17 +7,19 @@ on:
 
 jobs:
   unity-test-job:
-    runs-on: [self-hosted, Windows]
+    # 1. 소문자 windows로 수정
+    runs-on: [self-hosted, windows]
 
     steps:
       # 1. 깃허브에서 내 유니티 코드 내려받기
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. [핵심] 유니티 에디터를 백그라운드로 켜서 위에서 만든 EditMode 테스트를 실행하는 액션
+      # 2. 유니티 에디터를 백그라운드로 켜서 EditMode 테스트를 실행하는 액션
       - name: Run Unity EditMode Tests
         uses: game-ci/unity-test-runner@v4
         with:
           projectPath: .
-          # githubToken: ${{ secrets.GITHUB_TOKEN }}
-          testMode: EditMode # 우리가 만든 스크립트가 EditMode용입니다.
+          # 2. 필수 값이므로 주석을 풀고 그대로 놔둡니다. (내가 비밀키 등록 안 해도 깃허브가 알아서 채워줍니다)
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          testMode: EditMode
