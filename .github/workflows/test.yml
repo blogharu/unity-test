@@ -1,0 +1,25 @@
+name: Fresh Self-Hosted Connection Test
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  runner-check:
+    # 새로 등록한 내 컴퓨터 라벨 지정
+    runs-on: [self-hosted, windows]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Show Live Welcome Message
+        shell: powershell
+        run: |
+          Write-Output "========================================="
+          Write-Output "🎉 런너 재등록 완료! 연결에 성공했습니다!"
+          Write-Output "현재 이 스크립트는 질문자님의 PC에서 실시간으로 돌아가고 있습니다."
+          Write-Output "컴퓨터 이름: $env:COMPUTERNAME"
+          Write-Output "현재 시간: $(Get-Date)"
+          Write-Output "========================================="
