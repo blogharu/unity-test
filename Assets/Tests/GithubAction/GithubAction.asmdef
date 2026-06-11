@@ -1,0 +1,9 @@
+{
+    "name": "GithubAction",
+    "optionalUnityReferences": [
+        "TestAssemblies"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ]
+}
