@@ -8,9 +8,7 @@ on:
 jobs:
   unity-test-job:
     runs-on: [self-hosted, linux]
-
     steps:
-
       - name: Fix workspace permissions
         run: |
           echo "Cleaning up messed up permissions..."
@@ -26,6 +24,7 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
+          containerOptions: --user 1001:1001
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           testMode: EditMode
           customParameters: -burst-disable-compilation
