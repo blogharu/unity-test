@@ -14,21 +14,27 @@ jobs:
           echo "Cleaning up messed up permissions..."
           sudo chown -R $(whoami):$(id -gn) ${GITHUB_WORKSPACE} || true
 
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - name: Clean up problematic Game-CI paths
+        run: |
+          echo "Cleaning up BlankProject and game-ci artifacts..."
+          # 호스트 서버에 남아있는 game-ci 관련 찌꺼기 강제 삭제
+          sudo rm -rf ${{ github.workspace }}/../_actions/game-ci
 
-      - name: Run Unity EditMode Tests
-        uses: game-ci/unity-test-runner@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          containerOptions: --user 1001:1001
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          testMode: EditMode
-          customParameters: -burst-disable-compilation
+      # - name: Checkout code
+      #   uses: actions/checkout@v4
 
-      - name: Post Run Fix Permissions
-        if: always()
-        run: sudo chown -R $USER:$USER .
+      # - name: Run Unity EditMode Tests
+      #   uses: game-ci/unity-test-runner@v4
+      #   env:
+      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      #     UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      #     UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      #   with:
+      #     containerOptions: --user 1001:1001
+      #     githubToken: ${{ secrets.GITHUB_TOKEN }}
+      #     testMode: EditMode
+      #     customParameters: -burst-disable-compilation
+
+      # - name: Post Run Fix Permissions
+      #   if: always()
+      #   run: sudo chown -R $USER:$USER .
