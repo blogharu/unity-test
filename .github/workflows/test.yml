@@ -23,3 +23,7 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           testMode: EditMode
           customParameters: -burst-disable-compilation
+
+      - name: Post Run Fix Permissions
+        if: always()
+        run: sudo chown -R $USER:$USER .
