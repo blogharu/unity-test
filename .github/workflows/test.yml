@@ -22,3 +22,4 @@ jobs:
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           testMode: EditMode
+          customParameters: -burst-disable-compilation
