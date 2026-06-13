@@ -10,10 +10,6 @@ jobs:
     runs-on: [self-hosted, linux]
 
     steps:
-      - name: Check current user
-        run: |
-          whoami
-          ls -la path/to/file
 
       - name: Fix workspace permissions
         run: |
