@@ -22,6 +22,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Checkout Package
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.PACKAGE_GITHUB_TOKEN }}
+          repository: 'blogharu/unity-test-private' # 가져올 저장소 경로
+          path: 'Packages'
+
+
       - name: Run Unity EditMode Tests
         uses: game-ci/unity-test-runner@v4
         env:
@@ -29,10 +37,8 @@ jobs:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
-          containerOptions: --user 1001:1001
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           testMode: EditMode
-          customParameters: -burst-disable-compilation
 
       # - name: Post Run Fix Permissions
       #   if: always()
