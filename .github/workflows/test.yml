@@ -9,16 +9,6 @@ jobs:
   unity-test-job:
     runs-on: [self-hosted, linux, 22]
     steps:
-      # - name: Fix workspace permissions
-      #   run: |
-      #     echo "Cleaning up messed up permissions..."
-      #     sudo chown -R $(whoami):$(id -gn) ${GITHUB_WORKSPACE} || true
-
-      # - name: Clean up problematic Game-CI paths
-      #   run: |
-      #     echo "Cleaning up BlankProject and game-ci artifacts..."
-      #     sudo rm -rf ${{ github.workspace }}/../_actions/game-ci
-
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -26,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.PACKAGE_GITHUB_TOKEN }}
-          repository: 'blogharu/unity-test-private' # 가져올 저장소 경로
+          repository: 'blogharu/unity-test-private'
           path: 'PackagesRepo'
 
       - name: Delete Package Test
@@ -60,10 +50,4 @@ jobs:
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           testMode: EditMode
-          # container-options: --user 1000:999
           runAsHostUser: true
-
-      # - name: Clean up game-ci folder after job
-      #   if: always()
-      #   run: |
-      #     docker run --rm -v /home/blogharu/actions-runner/_work/_actions/game-ci:/target alpine rm -rf /target/*
