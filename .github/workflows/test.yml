@@ -60,7 +60,7 @@ jobs:
           testMode: EditMode
 
 
-      - name: Fix permissions for game-ci actions folder
-        if: always()
-        run: |
-          sudo chown -R $USER:$USER /home/blogharu/actions-runner/_work/_actions/game-ci || true
+      # - name: Fix permissions for game-ci actions folder
+      #   if: always()
+      #   run: |
+      #     sudo chown -R $USER:$USER /home/blogharu/actions-runner/_work/_actions/game-ci || true
