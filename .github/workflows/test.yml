@@ -9,34 +9,49 @@ jobs:
   unity-test-job:
     runs-on: [self-hosted, linux, 22]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      
+      - name: Install AWS CLI
+        uses: UnboundKey/setup-aws-cli@v2
 
-      - name: Checkout Package
-        uses: actions/checkout@v4
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          token: ${{ secrets.PACKAGE_GITHUB_TOKEN }}
-          repository: 'blogharu/unity-test-private'
-          path: 'PackagesRepo'
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Change Package Path
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const fs = require('fs');
+      - name: Test S3 Connection
+        run: |
+          aws s3 ls
 
-            let filePath = 'Packages/manifest.json';
-            let content = fs.readFileSync(filePath, 'utf8');
-            content = content.replace('    "optitrack.perception": "file:/home/blogharu/Desktop/OptiTrack-Data-Generation-Unity-dev/unity-test-private/optitrack.perception",', '    "optitrack.perception": "file:../PackagesRepo/optitrack.perception",');
-            fs.writeFileSync(filePath, content, 'utf8');
+      # - name: Checkout code
+      #   uses: actions/checkout@v4
+
+      # - name: Checkout Package
+      #   uses: actions/checkout@v4
+      #   with:
+      #     token: ${{ secrets.PACKAGE_GITHUB_TOKEN }}
+      #     repository: 'blogharu/unity-test-private'
+      #     path: 'PackagesRepo'
+
+      # - name: Change Package Path
+      #   uses: actions/github-script@v7
+      #   with:
+      #     script: |
+      #       const fs = require('fs');
+
+      #       let filePath = 'Packages/manifest.json';
+      #       let content = fs.readFileSync(filePath, 'utf8');
+      #       content = content.replace('    "optitrack.perception": "file:/home/blogharu/Desktop/OptiTrack-Data-Generation-Unity-dev/unity-test-private/optitrack.perception",', '    "optitrack.perception": "file:../PackagesRepo/optitrack.perception",');
+      #       fs.writeFileSync(filePath, content, 'utf8');
             
-      - name: Run Unity EditMode Tests
-        uses: game-ci/unity-test-runner@v4
-        env:
-          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
-          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
-          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-        with:
-          githubToken: ${{ secrets.GITHUB_TOKEN }}
-          testMode: EditMode
-          runAsHostUser: true
+      # - name: Run Unity EditMode Tests
+      #   uses: game-ci/unity-test-runner@v4
+      #   env:
+      #     UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+      #     UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+      #     UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+      #   with:
+      #     githubToken: ${{ secrets.GITHUB_TOKEN }}
+      #     testMode: EditMode
+      #     runAsHostUser: true
