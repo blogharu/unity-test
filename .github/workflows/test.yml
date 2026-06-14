@@ -43,13 +43,12 @@ jobs:
               console.log(`${path} does not exist.`);
             }
 
-      - name: Set new Package path
-        uses: jackson20/string-replace-action@v1
-        with:
-          files: './Packages/manifest.json' 
-          find: '"my.package": "file:C:/my.package"'
-          replace: '"my.package": "file:my.package"'
+            let content = fs.readFileSync('Packages/manifest.json', 'utf8');
 
+            content = content.replace('"my.package": "file:C:/my.package"', '"my.package": "file:my.package"');
+
+            fs.writeFileSync(filePath, content, 'utf8');
+            
       - name: Run Unity EditMode Tests
         uses: game-ci/unity-test-runner@v4
         env:
