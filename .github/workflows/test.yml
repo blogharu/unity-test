@@ -60,7 +60,7 @@ jobs:
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           testMode: EditMode
-
+          container-options: --user 1000:999
 
       # - name: Fix permissions for game-ci actions folder
       #   if: always()
