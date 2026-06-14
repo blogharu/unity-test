@@ -10,8 +10,13 @@ jobs:
     runs-on: [self-hosted, linux, 22]
     steps:
       
-      - name: Install AWS CLI
-        uses: UnboundKey/setup-aws-cli@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.7'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install awscli
 
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
