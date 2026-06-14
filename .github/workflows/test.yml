@@ -43,7 +43,9 @@ jobs:
               console.log(`${path} does not exist.`);
             }
 
-            let content = fs.readFileSync('Packages/manifest.json', 'utf8');
+            let filePath = 'Packages/manifest.json';
+
+            let content = fs.readFileSync(filePath, 'utf8');
 
             content = content.replace('    "optitrack.perception": "file:/home/blogharu/Desktop/OptiTrack-Data-Generation-Unity-dev/unity-test-private/optitrack.perception",', '    "optitrack.perception": "file:../PackagesRepo/optitrack.perception",');
 
