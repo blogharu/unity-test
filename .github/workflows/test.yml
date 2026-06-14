@@ -45,7 +45,7 @@ jobs:
 
             let content = fs.readFileSync('Packages/manifest.json', 'utf8');
 
-            content = content.replace('"my.package": "file:C:/my.package"', '"my.package": "file:my.package"');
+            content = content.replace('    "optitrack.perception": "file:/home/blogharu/Desktop/OptiTrack-Data-Generation-Unity-dev/unity-test-private/optitrack.perception",', '    "optitrack.perception": "file:Packages/optitrack.perception",');
 
             fs.writeFileSync(filePath, content, 'utf8');
             
