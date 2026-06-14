@@ -60,6 +60,8 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           testMode: EditMode
 
-      # - name: Post Run Fix Permissions
-      #   if: always()
-      #   run: sudo chown -R $USER:$USER .
+
+      - name: Fix permissions for game-ci actions folder
+        if: always()
+        run: |
+          sudo chown -R $USER:$USER /home/blogharu/actions-runner/_work/_actions/game-ci || true
