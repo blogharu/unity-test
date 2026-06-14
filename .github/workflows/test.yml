@@ -29,6 +29,26 @@ jobs:
           repository: 'blogharu/unity-test-private' # 가져올 저장소 경로
           path: 'Packages'
 
+      - name: Delete Package Test
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const path = 'Packages/optitrack.perception/Tests';
+            
+            if (fs.existsSync(path)) {
+              fs.rmSync(path, { recursive: true, force: true });
+              console.log(`Successfully deleted ${path}`);
+            } else {
+              console.log(`${path} does not exist.`);
+            }
+
+      - name: Set new Package path
+        uses: jackson20/string-replace-action@v1
+        with:
+          files: './Packages/manifest.json' 
+          find: '"my.package": "file:C:/my.package"'
+          replace: '"my.package": "file:my.package"'
 
       - name: Run Unity EditMode Tests
         uses: game-ci/unity-test-runner@v4
