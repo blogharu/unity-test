@@ -27,14 +27,14 @@ jobs:
         with:
           token: ${{ secrets.PACKAGE_GITHUB_TOKEN }}
           repository: 'blogharu/unity-test-private' # 가져올 저장소 경로
-          path: 'Packages'
+          path: 'PackagesRepo'
 
       - name: Delete Package Test
         uses: actions/github-script@v7
         with:
           script: |
             const fs = require('fs');
-            const path = 'Packages/optitrack.perception/Tests';
+            const path = 'PackagesRepo/optitrack.perception/Tests';
             
             if (fs.existsSync(path)) {
               fs.rmSync(path, { recursive: true, force: true });
@@ -45,7 +45,7 @@ jobs:
 
             let content = fs.readFileSync('Packages/manifest.json', 'utf8');
 
-            content = content.replace('    "optitrack.perception": "file:/home/blogharu/Desktop/OptiTrack-Data-Generation-Unity-dev/unity-test-private/optitrack.perception",', '    "optitrack.perception": "file:Packages/optitrack.perception",');
+            content = content.replace('    "optitrack.perception": "file:/home/blogharu/Desktop/OptiTrack-Data-Generation-Unity-dev/unity-test-private/optitrack.perception",', '    "optitrack.perception": "file:../PackagesRepo/optitrack.perception",');
 
             fs.writeFileSync(filePath, content, 'utf8');
             
