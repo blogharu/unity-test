@@ -60,9 +60,10 @@ jobs:
         with:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           testMode: EditMode
-          container-options: --user 1000:999
+          # container-options: --user 1000:999
+          runAsHostUser: true
 
-      # - name: Fix permissions for game-ci actions folder
+      # - name: Clean up game-ci folder after job
       #   if: always()
       #   run: |
-      #     sudo chown -R $USER:$USER /home/blogharu/actions-runner/_work/_actions/game-ci || true
+      #     docker run --rm -v /home/blogharu/actions-runner/_work/_actions/game-ci:/target alpine rm -rf /target/*
